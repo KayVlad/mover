@@ -1,0 +1,35 @@
+services:
+  mover:
+    build: .
+    image: mover:local
+    restart: unless-stopped
+    user: "${MOVER_UID:-1000}:${MOVER_GID:-1000}"
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      MOVER_TOKEN: "${MOVER_TOKEN:?Set MOVER_TOKEN in .env}"
+      MOVER_STATE: /state
+      MOVER_ROOTS: '{"Incoming":"/media/incoming","Library":"/media/library"}'
+    volumes:
+      - type: bind
+        source: ${MOVER_INCOMING_PATH:?Set MOVER_INCOMING_PATH in .env}
+        target: /media/incoming
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${MOVER_LIBRARY_PATH:?Set MOVER_LIBRARY_PATH in .env}
+        target: /media/library
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./state
+        target: /state
+        bind:
+          create_host_path: false
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

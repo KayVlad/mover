@@ -1,0 +1,21 @@
+# Local settings and secrets
+.env
+.env.*
+!.env.example
+
+# Runtime state
+.state/
+state/
+
+# Generated test and deployment output
+artifacts/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store

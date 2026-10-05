@@ -1,0 +1,16 @@
+.git
+.github
+.state
+state
+.env
+.env.*
+tests
+scripts
+docs
+artifacts
+__pycache__
+*.pyc
+.venv
+venv
+README.md
+requirements-test.txt
